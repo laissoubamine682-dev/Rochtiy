@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>كل عام وأنتِ معي يا تفاحة قلبي</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #fff0f5, #f7d9e3, #eec6d4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Amiri', serif;
+    color: #3a2a30;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    max-width: 900px;
+    padding: 25px;
+}
+
+#mainText {
+    font-size: 3.4em;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+
+#name {
+    font-size: 2.3em;
+    margin-bottom: 30px;
+    color: #b76e79;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+}
+
+#subText {
+    font-size: 1.6em;
+    line-height: 1.9;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+}
+
+#date {
+    margin-top: 45px;
+    font-size: 1.1em;
+    opacity: 0.6;
+}
+
+#audioBtn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(183,110,121,0.4);
+    color: #3a2a30;
+    padding: 10px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Amiri', serif;
+}
+
+#specialBtn {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    background: rgba(255,182,193,0.7);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Amiri', serif;
+}
+
+#specialImg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.star, .heart {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    opacity: 0.8;
+    animation: twinkle 4s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50px); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div id="mainText"></div>
+    <div id="name">Rochty</div>
+    <div id="subText">
+        في بداية عامٍ جديد،<br>
+        لا أجد أمنية أصدق<br>
+        من أن تبقي معي ماحييت وبعد ان افنى…<br>
+        يا هُدوء حَياتي، و سكِينةَ أيَامي، يا مقيمةً في القلب ومالِكتُه.<br><br>
+        كل عام وأنتِ معي يا تفاحة قلبي خاطر أنا<br>
+        أريدكِ معي…<br>
+        ما دام في العمر امتداد،<br>
+        وما بقي للروح معنى فالدنيا و الآخرة.<br><br>
+        نحبك بزااف يا كل سنيني وايامي وبهجة حياتي وروشتيي وحبوبتي الحلوة
+    </div>
+    <div id="date"></div>
+</div>
+
+<!-- موسيقى أساسية -->
+<audio id="bgMusic" loop>
+    <source src="my_music.mp3" type="audio/mpeg">
+</audio>
+<button id="audioBtn">تشغيل الموسيقى 🎵</button>
+
+<!-- نسمات الليل -->
+<audio id="nightWind" loop autoplay>
+    <source src="night_wind.mp3" type="audio/mpeg">
+</audio>
+
+<!-- زر موسيقى + صورة خاصة -->
+<button id="specialBtn">اضغط هنا</button>
+<img id="specialImg" src="special_image.jpg">
+
+<audio id="specialMusic">
+    <source src="special_music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// كتابة تدريجية
+const text = "كل عام وأنتِ معي يا تفاحة قلبي…";
+let i = 0;
+const speed = 100;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("mainText").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+    } else {
+        setTimeout(() => { document.getElementById("name").style.opacity = 1; }, 2500);
+        setTimeout(() => { document.getElementById("subText").style.opacity = 1; }, 4500);
+    }
+}
+typeWriter();
+
+// التاريخ
+const today = new Date();
+document.getElementById("date").innerHTML =
+    today.toLocaleDateString('ar-DZ', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// موسيقى أساسية تشغيل/إيقاف
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("audioBtn");
+let playing = false;
+btn.onclick = () => {
+    if (!playing) { music.play(); btn.innerText = "إيقاف الموسيقى 🔇"; } 
+    else { music.pause(); btn.innerText = "تشغيل الموسيقى 🎵"; }
+    playing = !playing;
+};
+
+// زر موسيقى + صورة خاصة
+const btnSpecial = document.getElementById("specialBtn");
+const imgSpecial = document.getElementById("specialImg");
+const musicSpecial = document.getElementById("specialMusic");
+btnSpecial.onclick = () => {
+    musicSpecial.play();
+    imgSpecial.style.opacity = 1;
+};
+
+// نجوم
+for (let s=0; s<80; s++){
+    let star = document.createElement("div");
+    star.className = "star";
+    star.style.top = Math.random()*100 + "vh";
+    star.style.left = Math.random()*100 + "vw";
+    star.style.animationDuration = (Math.random()*3 + 2) + "s";
+    document.body.appendChild(star);
+}
+
+// قلوب صغيرة متحركة
+for (let c=0;c<50;c++){
+    let heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.className = "heart";
+    heart.style.fontSize = Math.random()*24 + 12 + "px";
+    heart.style.top = Math.random()*100 + "vh";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.opacity = Math.random()*0.8 + 0.2;
+    heart.style.animation = floatHeart ${Math.random()*5 + 5}s infinite alternate;
+    document.body.appendChild(heart);
+}
+</script>
+
+</body>
+</html>
